@@ -1,0 +1,55 @@
+<fragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_fragment"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="estructuras.grafos.estructurasproyect.com.grafos.Mapas.MapsActivityCreaGrafo">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            map:fab_addButtonColorNormal="?attr/colorPrimary"
+            map:fab_addButtonSize="normal"
+            map:fab_labelStyle="@style/Etiquetas"
+            map:fab_labelsPosition="left"
+            >
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_marker_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                map:fab_colorNormal="@color/colorPrimaryDark"
+                map:fab_icon="@drawable/add_marker_icon"
+                map:fab_size="mini"
+                map:fab_title="Agregar vertice"
+
+                />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_polilyne_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                map:fab_colorNormal="@color/colorPrimaryDark"
+                map:fab_icon="@drawable/add_polilyne_icon"
+                map:fab_size="mini"
+                map:fab_title="Agregar arco"
+
+                />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                map:fab_colorNormal="@color/colorPrimaryDark"
+                map:fab_icon="@drawable/save_icon"
+                map:fab_size="mini"
+                map:fab_title="Guardar" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </fragment>

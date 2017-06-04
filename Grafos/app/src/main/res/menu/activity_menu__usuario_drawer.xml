@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Elecciones">
+        <menu>
+            <item
+                android:id="@+id/eleccionUno"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Insertar" />
+
+            <item
+                android:id="@+id/eleccionDos"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Modificar" />
+            <item
+                android:id="@+id/eleccionTres"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Eliminar" />
+
+
+        </menu>
+    </item>
+
+    <item android:title="Consultas">
+        <menu>
+            <item
+                android:id="@+id/consultaUno"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Camino más corto" />
+
+            <item
+                android:id="@+id/consultaDos"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Tipo de Grafo (Conexo) " />
+            <item
+                android:id="@+id/consultaTres"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Tipo de Grafo (Cíclico)" />
+            <item
+                android:id="@+id/consultaCuatro"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Verificacion de Camino" />
+
+        </menu>
+    </item>
+
+    <item android:title="Reportes">
+        <menu>
+            <item
+                android:id="@+id/reporteUno"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Vértices sumideros" />
+
+            <item
+                android:id="@+id/reporteDos"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Vértices fuente" />
+            <item
+                android:id="@+id/reporteTres"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Grado interno" />
+            <item
+                android:id="@+id/reporteCuatro"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Grado externo " />
+
+        </menu>
+    </item>
+
+</menu>

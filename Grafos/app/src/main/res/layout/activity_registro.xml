@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="estructuras.grafos.estructurasproyect.com.grafos.Graficos.Registro">
+
+    <EditText
+        android:id="@+id/nombreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/cedulaText"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/cedulaText"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <EditText
+        android:id="@+id/cedulaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cedula"
+        android:inputType="textPersonName|number"
+        android:layout_marginStart="68dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/nombreText"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="68dp" />
+
+    <Button
+        android:id="@+id/button_guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/cedulaText"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/cedulaText"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp" />
+
+    <Button
+        android:id="@+id/button_limpiar_archivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limpiar Archivo"
+        android:layout_marginStart="68dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="68dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="49dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="68dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:text="Solo precionar en casos de emergencia"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/button_limpiar_archivo"
+        app:layout_constraintLeft_toLeftOf="@+id/button_limpiar_archivo"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostrar todos los usuarios en el txt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="175dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="68dp" />
+
+    <Button
+        android:id="@+id/button_mostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="998dp"
+        android:text="Mostrar"
+        app:layout_constraintLeft_toLeftOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="998dp" />
+
+    <Button
+        android:id="@+id/button_imprimir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Mostrar"
+        app:layout_constraintLeft_toLeftOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+</android.support.constraint.ConstraintLayout>
