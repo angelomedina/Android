@@ -21,29 +21,25 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Mapas.MapsActivityCargaGrafo"
             android:label="@string/title_activity_maps_carga_grafo" />
         <activity android:name=".Mapas.MainActivity" />
         <activity android:name=".Graficos.Registro" />
         <activity
-            android:name=".Graficos.Menu_Administrador"
-            android:label="@string/title_activity_menu__administrador"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Graficos.Menu_Usuario"
             android:label="@string/title_activity_menu__usuario"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Mapas.MapsActivityCreaGrafo"
-            android:label="@string/title_activity_maps">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
+        <activity
+            android:name=".Graficos.Menu_Administrador"
+            android:label="@string/title_activity_menu__administrador"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

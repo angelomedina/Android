@@ -1,5 +1,6 @@
 package estructuras.grafos.estructurasproyect.com.grafos.Graficos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import estructuras.grafos.estructurasproyect.com.grafos.Mapas.MapsActivityCreaGrafo;
 import estructuras.grafos.estructurasproyect.com.grafos.R;
 
 public class Menu_Administrador extends AppCompatActivity
@@ -116,6 +118,20 @@ public class Menu_Administrador extends AppCompatActivity
         else if (id == R.id.reporteCuatro)
         {
             Toast.makeText(Menu_Administrador.this, "Presionastes Grado Externo", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.eleccionUno)
+        {
+            Intent intent = new Intent(Menu_Administrador.this, MapsActivityCreaGrafo.class); // con esto paso a las ventanas
+            startActivity(intent);//inicia la activit
+            Toast.makeText(Menu_Administrador.this, "Presionastes Insertar", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.eleccionDos)
+        {
+            Toast.makeText(Menu_Administrador.this, "Presionastes Modificar", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.eleccionUno)
+        {
+            Toast.makeText(Menu_Administrador.this, "Presionastes Eliminar", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
