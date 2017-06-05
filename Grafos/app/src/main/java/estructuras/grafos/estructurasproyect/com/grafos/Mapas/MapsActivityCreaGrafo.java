@@ -227,6 +227,23 @@ public class MapsActivityCreaGrafo extends FragmentActivity
         }
     }
 
+    public void LeerGrafo(){ //
+        if(grafoCreado == null){
+            return;
+        }
+
+        Vertice aux = grafoCreado;
+        while(aux != null){
+            //Leer vertice aux.nombre:
+            Arco var = aux.sigA; //
+            while(var != null){
+                //Leer arco var.destino-var.peso
+                var = var.sigArco;
+            }
+            aux = aux.sigVertice;
+        }
+    }
+
     //######################################### VENTANAS DE DIALOGO #####################################################################
 
             public void CreaDialogoNuevoVertice(){
