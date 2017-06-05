@@ -1,9 +1,7 @@
 package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,8 +47,12 @@ public class MapsActivityCreaGrafo extends FragmentActivity
     public boolean vertice_existente;
     //Botones
 
+     //Archivo
+     final String[] archivos = fileList(); // esta es una libreria propia para entrar a todos los txt de Android
 
-    //######################################## CONSTRUCTOR ##################################################
+
+
+            //######################################## CONSTRUCTOR ##################################################
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -78,11 +80,12 @@ public class MapsActivityCreaGrafo extends FragmentActivity
         findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MapsActivityCreaGrafo.this, "Guardando...", Toast.LENGTH_SHORT).show();
-                MapsActivityCargaGrafo sig = new MapsActivityCargaGrafo();
-                sig.setGrafo(grafoCreado);
-                Intent next = new Intent(MapsActivityCreaGrafo.this, sig.getClass());
-                startActivity(next);
+                //LeerGrafo();
+//                Toast.makeText(MapsActivityCreaGrafo.this, "Guardando...", Toast.LENGTH_SHORT).show();
+//                MapsActivityCargaGrafo sig = new MapsActivityCargaGrafo();
+//                sig.setGrafo(grafoCreado);
+//                Intent next = new Intent(MapsActivityCreaGrafo.this, sig.getClass());
+//                startActivity(next);
 
             }
         });
@@ -227,22 +230,81 @@ public class MapsActivityCreaGrafo extends FragmentActivity
         }
     }
 
-    public void LeerGrafo(){ //
-        if(grafoCreado == null){
-            return;
-        }
 
-        Vertice aux = grafoCreado;
-        while(aux != null){
-            //Leer vertice aux.nombre:
-            Arco var = aux.sigA; //
-            while(var != null){
-                //Leer arco var.destino-var.peso
-                var = var.sigArco;
-            }
-            aux = aux.sigVertice;
-        }
-    }
+
+//    public void LeerGrafo(){ //
+//        if(grafoCreado == null){
+//            return;
+//        }
+//
+//        Vertice aux = grafoCreado;
+//        while(aux != null){
+//            //Leer vertice aux.nombre:
+//            LeerTxt_I("150,Pri",aux.nombre+":");
+//
+//            Arco var = aux.sigA; //
+//            while(var != null){
+//                //Leer arco var.destino-var.peso
+//                var = var.sigArco;
+//            }
+//            aux = aux.sigVertice;
+//        }
+//    }
+//
+//
+//    private boolean existe(String[] archivos, String archbusca)
+//    {
+//                for (int f = 0; f < archivos.length; f++) {
+//                    if (archbusca.equals(archivos[f])) {
+//                        return true;
+//                    }
+//
+//                }
+//                return false;
+//    }
+//
+//    public void LeerTxt_I(String usuario,String texto) //lo que hace es leer un txt en memoria interna
+//    {
+//        final String[] archivos = fileList(); // esta es una libreria propia para entrar a todos los txt de Android
+//        try
+//        {
+//            if (existe(archivos,"UsuariosArchivos.txt"))
+//            {
+//                InputStreamReader archivo = new InputStreamReader(openFileInput("UsuariosArchivos.txt"));
+//                BufferedReader br=new BufferedReader(archivo);
+//                String linea = br.readLine();
+//                String todo = "";
+//
+//                while(linea != null)
+//                {
+//                    todo=todo + linea +"\n";
+//                    linea=br.readLine();
+//
+//                    if(usuario.equals(todo))
+//                    {
+//                        //
+//                        RandomAccessFile fichero = new RandomAccessFile("UsuariosArchivos", "rw");
+//                        fichero.seek(br.read());
+//                        fichero.writeBytes("");
+//                        fichero.seek(fichero.getFilePointer());
+//                        fichero.writeBytes(texto);
+//                        fichero.close();
+//
+//                        Toast.makeText(MapsActivityCreaGrafo.this,"entro",Toast.LENGTH_LONG).show();
+//                        todo = "";
+//                    }
+//                }
+//                br.close();
+//                archivo.close();
+//            }
+//
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//            //Toast.makeText(Registro.this,"Error de lectura de Archivo",Toast.LENGTH_LONG).show();
+//        }
+//    }
 
     //######################################### VENTANAS DE DIALOGO #####################################################################
 
