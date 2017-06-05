@@ -153,7 +153,7 @@ public class MapsActivityCreaGrafo extends FragmentActivity
         PolylineOptions POLILINEA = new PolylineOptions()
                 .add(origen.getPosition())
                 .add(destino.getPosition())
-                .width(4).color(Color.YELLOW)
+                .width(4).color(R.color.Camino)
                 .geodesic(true);
         //Se crea un arco logico y se le agrega la polyline
         Arco nuevoAr =  new Arco(peso, POLILINEA, buscarVertice(destino.getTitle()));

@@ -32,7 +32,9 @@ public class MapsActivityCargaGrafo extends FragmentActivity
     public boolean vertices_existentes;
     //Metodos Grafo
     public int pesoSaltoMenor = 0;
-    public ArrayList<String> verticesRecorridos = new ArrayList<>();
+    //Ruta Corta
+    public ArrayList<String> recorridos = new ArrayList<>();
+    public ArrayList<String> recorridosRespaldo = new ArrayList<>();
 
     //#################################### CONSTRUCTOR ########################################################
 
@@ -83,54 +85,48 @@ public class MapsActivityCargaGrafo extends FragmentActivity
         this.grafo = grafo;
     }
 
-    public void CargarGrafo(){
-        mMap.clear();
-        lista_vertices.clear();
-
-        if(grafo == null){
-            return;
-        }
-
-        Vertice auxVer = grafo;
-
-        while(auxVer != null){
-            if(verticesRecorridos.contains(auxVer.nombre) == true){
-                mMap.addMarker(new MarkerOptions().position(auxVer.ubicacion).title(auxVer.nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_run_icon)));
-                lista_vertices.add(auxVer.nombre);
-                Arco auxAr = auxVer.sigA;
-                while(auxAr != null){
-                    if(verticesRecorridos.contains(auxAr.destino.nombre) == true){
-                        mMap.addPolyline(auxAr.arcoGrafico).setColor(Color.BLUE);
-                        auxAr = auxAr.sigArco;
-                    }
-                    else{
-                        mMap.addPolyline(auxAr.arcoGrafico);
-                        auxAr = auxAr.sigArco;
+            public void CargarGrafo(){
+                mMap.clear();
+                if(grafo == null){
+                    return;
+                }
+                Vertice auxVer = grafo;
+                while(auxVer != null){
+                    if(recorridosRespaldo.contains(auxVer.nombre)){
+                        mMap.addMarker(new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_run_icon))
+                                .position(auxVer.ubicacion)
+                                .title(auxVer.nombre));
+                        Arco auxAr = auxVer.sigA;
+                        while(auxAr != null){
+                            if(recorridosRespaldo.contains(auxAr.destino.nombre)){
+                                mMap.addPolyline(auxAr.arcoGrafico.color(Color.BLUE));
+                                auxAr = auxAr.sigArco;
+                            } else {
+                                mMap.addPolyline(auxAr.arcoGrafico);
+                                auxAr = auxAr.sigArco;
+                            }
+                        }
+                        auxVer = auxVer.sigVertice;
+                    } else {
+                        mMap.addMarker(new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon))
+                                .position(auxVer.ubicacion)
+                                .title(auxVer.nombre));
+                        Arco auxAr = auxVer.sigA;
+                        while(auxAr != null){
+                            if(recorridosRespaldo.contains(auxAr.destino.nombre)){
+                                mMap.addPolyline(auxAr.arcoGrafico.color(Color.BLUE));
+                                auxAr = auxAr.sigArco;
+                            } else {
+                                mMap.addPolyline(auxAr.arcoGrafico);
+                                auxAr = auxAr.sigArco;
+                            }
+                        }
+                        auxVer = auxVer.sigVertice;
                     }
                 }
-                auxVer = auxVer.sigVertice;
-
-            }else{
-
-                mMap.addMarker(new MarkerOptions().position(auxVer.ubicacion).title(auxVer.nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
-                lista_vertices.add(auxVer.nombre);
-                Arco auxAr = auxVer.sigA;
-                while(auxAr != null){
-                    if(verticesRecorridos.contains(auxAr.destino.nombre) == true){
-                        mMap.addPolyline(auxAr.arcoGrafico).setColor(Color.BLUE);
-                        auxAr = auxAr.sigArco;
-                    }
-                    else {
-                        mMap.addPolyline(auxAr.arcoGrafico);
-                        auxAr = auxAr.sigArco;
-                    }
-                }
-                auxVer = auxVer.sigVertice;
             }
-        }
-        verticesRecorridos.clear();
-        pesoSaltoMenor = 0;
-    }
 
 //################################## VALIDACION VERTICES ########################################
 
@@ -157,101 +153,88 @@ public class MapsActivityCargaGrafo extends FragmentActivity
                 return null;
             }
 
-            public void CaminoCortoPorPeso(Vertice origen , Vertice destino)  // método que llama por boton
-            {
+            public void TrazarRutaCortaPeso(Vertice actual, String destino, int peso){
+                recorridos.add(actual.nombre);
+
+                if(actual.nombre.equals(destino)){
+                    if(pesoSaltoMenor == 0 || peso < pesoSaltoMenor){
+                        pesoSaltoMenor = peso;
+                        RespaldarArray();
+                        LimpiarArray();
+                        return;
+                    }
+                    LimpiarArray();
+                    return;
+                }
+                if(actual.marca == true){
+                    return;
+                }
+                actual.marca = true;
+
+                Arco aux = actual.sigA;
+                while(aux != null){
+                    TrazarRutaCortaPeso(aux.destino, destino, peso + aux.peso);
+                    LimpiarMarcas();
+                    aux = aux.sigArco;
+                }
+            }
+
+            public void TrazarRutaCortaSalto(Vertice actual, String destino, int peso){
+                recorridos.add(actual.nombre);
+
+                if(actual.nombre.equals(destino)){
+                    if(pesoSaltoMenor == 0 || peso < pesoSaltoMenor){
+                        pesoSaltoMenor = peso;
+                        RespaldarArray();
+                        LimpiarArray();
+                        return;
+                    }
+                    LimpiarArray();
+                    return;
+                }
+                if(actual.marca == true){
+                    return;
+                }
+                actual.marca = true;
+
+                Arco aux = actual.sigA;
+                while(aux != null){
+                    TrazarRutaCortaSalto(aux.destino, destino, peso + 1);
+                    LimpiarMarcas();
+                    aux = aux.sigArco;
+                }
+            }
+
+            public void RespaldarArray(){
+                recorridosRespaldo.clear();
+                for(int x = 0; x < recorridos.size(); x++){
+                    recorridosRespaldo.add(recorridos.get(x));
+                }
+            }
+
+            public void LimpiarArray(){
+                String primero = recorridos.get(0);
+                recorridos.clear();
+                recorridos.add(primero);
+            }
+
+            public void LimpiarMarcas(){
+                if(grafo == null){
+                    return;
+                }
+                Vertice aux = grafo;
+                while(aux != null){
+                    aux.marca = false;
+                    aux = aux.sigVertice;
+                }
+            }
+
+            public void ResetVariables(){
+                recorridos.clear();
+                recorridosRespaldo.clear();
                 pesoSaltoMenor = 0;
-                verticesRecorridos.clear();
-                Arco aux = origen.sigA;  // recorre lista de arcos del origen
-                while (aux != null  )
-                {
-                    ArrayList<String> ruta =  new ArrayList<>();
-                    ruta.add(origen.nombre);
-                    RecursivoCaminoPeso(aux,destino,aux.peso,ruta,origen);
-                    aux=aux.sigArco;
-                }
-
-                CargarGrafo();
+                LimpiarMarcas();
             }
-
-            public void RecursivoCaminoPeso(Arco arco, Vertice destino, int contador, ArrayList<String> ruta, Vertice origen)
-            {
-                if (arco.destino == destino)  // si concuerda con el destino
-                {
-                    if(pesoSaltoMenor == 0 || contador < pesoSaltoMenor){
-                        pesoSaltoMenor = contador;
-                        verticesRecorridos.clear();
-                        ClonarArray(ruta);
-                    }
-                }
-                else  /////// si no concuerdda el destino
-                {
-                    // recorre lista de arcos del otro destino
-                    if (arco.destino.sigA != null) // si el destino del arco  tiene mas  arcos
-                    {
-                        arco = arco.destino.sigA; // variable aux de los arco de destino
-                        while (arco != null)
-                        {
-                            if (arco.destino != origen) // ademas si el arco a usar , el destino sea distinto al origen
-                            {   /// condicion para evitar el bucle ABABABABABAC
-                                ruta.add(destino.nombre);
-                                RecursivoCaminoPeso( arco, destino, contador+arco.peso, ruta,origen);
-                            }
-                            arco=arco.sigArco;
-                        }
-                    }
-                }
-            }
-
-            public void ClonarArray(ArrayList<String> original){
-                for(int x = 0; x < original.size(); x++){
-                    verticesRecorridos.add(original.get(x));
-                }
-            }
-
-            public void CaminoCortoPorSalto(Vertice origen , Vertice destino)  // método que llama por boton
-            {
-                pesoSaltoMenor = 0;
-                verticesRecorridos.clear();
-                Arco aux = origen.sigA;  // recorre lista de arcos del origen
-                while (aux != null  )
-                {
-                    ArrayList<String> ruta =  new ArrayList<>();
-                    ruta.add(origen.nombre);
-                    RecursivoCaminoSalto(aux,destino,1,ruta,origen);
-                    aux=aux.sigArco;
-                }
-                CargarGrafo();
-            }
-            public void RecursivoCaminoSalto(Arco arco, Vertice destino, int contador, ArrayList<String> ruta, Vertice origen)
-            {
-
-                if (arco.destino == destino)  // si concuerda con el destino
-                {
-                    if(pesoSaltoMenor == 0 || contador < pesoSaltoMenor){
-                        pesoSaltoMenor = contador;
-                        verticesRecorridos.clear();
-                        ClonarArray(ruta);
-                    }
-                }
-                else  /////// si no concuerdda el destino
-                {
-                    // recorre lista de arcos del otro destino
-                    if (arco.destino.sigA != null) // si el destino del arco  tiene mas  arcos
-                    {
-                        arco = arco.destino.sigA; // variable aux de los arco de destino
-                        while (arco != null)
-                        {
-                            if (arco.destino != origen) // ademas si el arco a usar , el destino sea distinto al origen
-                            {   /// condicion para evitar el bucle ABABABABABAC
-                                ruta.add(destino.nombre);
-                                RecursivoCaminoSalto( arco, destino, contador+1, ruta,origen);
-                            }
-                            arco=arco.sigArco;
-                        }
-                    }
-                }
-            }
-
 
 
 //############################################# METODOS DE DIALOGS #################################################
@@ -270,11 +253,15 @@ public class MapsActivityCargaGrafo extends FragmentActivity
             public void FinalizaDialogoNewArco(String origen, String destino, String tipo) {
                 ValidarExistenciaVertice(origen, destino);
 
-                if(vertices_existentes == true && origen != destino){
+                if(vertices_existentes == true && !origen.equals(destino)){
                     if(tipo == "Saltos"){
-                        CaminoCortoPorSalto(buscarVertice(origen),buscarVertice(destino));
+                        TrazarRutaCortaSalto(buscarVertice(origen),destino, 0);
+                        CargarGrafo();
+                        ResetVariables();
                     }else{
-                        CaminoCortoPorPeso(buscarVertice(origen),buscarVertice(destino));
+                        TrazarRutaCortaPeso(buscarVertice(origen), destino, 0);
+                        CargarGrafo();
+                        ResetVariables();
                     }
                 } else {
                     Toast.makeText(MapsActivityCargaGrafo.this, "No existe uno o ambos vertices", Toast.LENGTH_SHORT).show();
