@@ -1,5 +1,7 @@
 package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 import estructuras.grafos.estructurasproyect.com.grafos.R;
+import estructuras.grafos.estructurasproyect.com.grafos.Singleton.SingletonGrafo;
 
 public class MapsActivityCreaGrafo extends FragmentActivity
         implements
@@ -26,73 +29,73 @@ public class MapsActivityCreaGrafo extends FragmentActivity
         {
 
 
-    //####################################### VARIABLES ############################################################
-    //Map
-    private GoogleMap mMap;
-    //Map variables
-    public Marker marcador_origen_select;
-    public Marker marcador_destino_select;
-    //Variables Crear Vertice / Arco
-    public LatLng coordenada_nuevo_vertice;
-    public String nombre_nuevo_vertice;
-    public int peso_nuevo_arco;
-    //Botones varibles
-    public boolean click_add_polilyne = false;
-    public boolean click_add_marker = false;
-    //Variables
-    public int selects = 0;
-    //Grafo
-    public static Vertice grafoCreado;
-    public ArrayList<String> lista_vertices_agregados = new ArrayList<>();
-    public boolean vertice_existente;
-    //Botones
-
-     //Archivo
-     final String[] archivos = fileList(); // esta es una libreria propia para entrar a todos los txt de Android
-
+            //####################################### VARIABLES ############################################################
+            //Map
+            private GoogleMap mMap;
+            //Map variables
+            public Marker marcador_origen_select;
+            public Marker marcador_destino_select;
+            //Variables Crear Vertice / Arco
+            public LatLng coordenada_nuevo_vertice;
+            public String nombre_nuevo_vertice;
+            public int peso_nuevo_arco;
+            //Botones varibles
+            public boolean click_add_polilyne = false;
+            public boolean click_add_marker = false;
+            //Variables
+            public int selects = 0;
+            //Grafo
+            public  Vertice grafoCreado=SingletonGrafo.getInstance().metGrafo.arbolUsuarioActual.grafo;
+            public ArrayList<String> lista_vertices_agregados = new ArrayList<>();
+            public boolean vertice_existente;
+            //Botones
 
 
             //######################################## CONSTRUCTOR ##################################################
 
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync(this);
-
-        findViewById(R.id.add_marker_button).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                CreaDialogoNuevoVertice();
+            protected void onCreate(final Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_maps);
+
+
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map_fragment);
+                mapFragment.getMapAsync(this);
+
+                findViewById(R.id.add_marker_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CreaDialogoNuevoVertice();
+                    }
+                });
+
+                findViewById(R.id.add_polilyne_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CreaDialogoNuevoArco();
+                    }
+                });
+
+                findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        SingletonGrafo.getInstance().metGrafo.arbolUsuarioActual.grafo=grafoCreado;// aqui agrega los grafos creados al usuario actual
+
+                        Toast.makeText(MapsActivityCreaGrafo.this,SingletonGrafo.getInstance().metGrafo.arbolUsuarioActual.nombre+", agregastes una Ruta!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapsActivityCreaGrafo.this, "Guardando...", Toast.LENGTH_SHORT).show();
+                        MapsActivityCargaGrafo sig = new MapsActivityCargaGrafo();
+                        sig.setGrafo(SingletonGrafo.getInstance().metGrafo.arbolUsuarioActual.grafo);
+                        Intent next = new Intent(MapsActivityCreaGrafo.this, sig.getClass());
+                        startActivity(next);
+
+                    }
+                });
+
             }
-        });
 
-        findViewById(R.id.add_polilyne_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreaDialogoNuevoArco();
-            }
-        });
-
-        findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //LeerGrafo();
-//                Toast.makeText(MapsActivityCreaGrafo.this, "Guardando...", Toast.LENGTH_SHORT).show();
-//                MapsActivityCargaGrafo sig = new MapsActivityCargaGrafo();
-//                sig.setGrafo(grafoCreado);
-//                Intent next = new Intent(MapsActivityCreaGrafo.this, sig.getClass());
-//                startActivity(next);
-
-            }
-        });
-
-    }
-
-    //################################## VALIDACION VERTICES ########################################
+            //################################## VALIDACION VERTICES ########################################
 
             public void ValidarExistenciaVertice(String texto){
                 for(int x = 0; x < lista_vertices_agregados.size(); x++){
@@ -104,209 +107,135 @@ public class MapsActivityCreaGrafo extends FragmentActivity
                 vertice_existente = false;
             }
 
-    //####################################### METODOS GMAPS #################################################
+            //####################################### METODOS GMAPS #################################################
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapLongClick(LatLng latLng) {
-                if (click_add_marker == true) {
-                    //Se crea el nuevo vertice y se agrega al grafo
-                    Vertice nuevoVer = new Vertice(nombre_nuevo_vertice, latLng);
-                    InsertarVertice(nuevoVer);
-                    //Se crea un marker en Gmap
-                    mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon))
-                            .position(latLng).title(nombre_nuevo_vertice));
-                    //Se cambia el estado del click en agregar vertice
-                    click_add_marker = false;
-                }
-            }
-        });
+            public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if (click_add_polilyne == true) {
-                    if (selects == 0) {
-                        marcador_origen_select = marker;
-                        selects = 1;
-                        Toast.makeText(MapsActivityCreaGrafo.this, "Seleccione el destino", Toast.LENGTH_SHORT).show();
-
-                    } else if (selects == 1) {
-                        if (!marker.getPosition().equals(marcador_origen_select.getPosition())) {
-                            selects = 0;
-                            marcador_destino_select = marker;
-                            creaPolilyne(marcador_origen_select, marcador_destino_select, peso_nuevo_arco);
-                        } else {
-                            Toast.makeText(MapsActivityCreaGrafo.this, "Destino no valido: Seleccione otro", Toast.LENGTH_SHORT).show();
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                        if (click_add_marker == true) {
+                            //Se crea el nuevo vertice y se agrega al grafo
+                            Vertice nuevoVer = new Vertice(nombre_nuevo_vertice, latLng);
+                            InsertarVertice(nuevoVer);
+                            //Se crea un marker en Gmap
+                            mMap.addMarker(new MarkerOptions()
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon))
+                                    .position(latLng).title(nombre_nuevo_vertice));
+                            //Se cambia el estado del click en agregar vertice
+                            click_add_marker = false;
                         }
                     }
+                });
+
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        if (click_add_polilyne == true) {
+                            if (selects == 0) {
+                                marcador_origen_select = marker;
+                                selects = 1;
+                                Toast.makeText(MapsActivityCreaGrafo.this, "Seleccione el destino", Toast.LENGTH_SHORT).show();
+
+                            } else if (selects == 1) {
+                                if (!marker.getPosition().equals(marcador_origen_select.getPosition())) {
+                                    selects = 0;
+                                    marcador_destino_select = marker;
+                                    creaPolilyne(marcador_origen_select, marcador_destino_select, peso_nuevo_arco);
+                                } else {
+                                    Toast.makeText(MapsActivityCreaGrafo.this, "Destino no valido: Seleccione otro", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            public void creaPolilyne(Marker origen, Marker destino, int peso) {
+                //Se crea una polyline grafica
+                PolylineOptions POLILINEA = new PolylineOptions()
+                        .add(origen.getPosition())
+                        .add(destino.getPosition())
+                        .width(4).color(Color.YELLOW)
+                        .geodesic(true);
+                //Se crea un arco logico y se le agrega la polyline
+                Arco nuevoAr =  new Arco(peso, POLILINEA, buscarVertice(destino.getTitle()));
+                InsertarArco(origen.getTitle(), nuevoAr);
+                //Se muestra graficamente en el Map
+                mMap.addPolyline(POLILINEA);
+                //Se cambia el estado Click agregar arco
+                click_add_polilyne = false;
+            }
+
+            //####################################### METODOS GRAFO #################################################
+
+            public Vertice buscarVertice(String nombre){
+                if(grafoCreado == null){
+                    return null;
                 }
-                return false;
+                Vertice aux = grafoCreado;
+
+                while(aux != null){
+                    if(aux.nombre.equals(nombre)){
+                        return aux;
+                    }
+                    aux = aux.sigVertice;
+                }
+                return null;
             }
-        });
-    }
 
-    public void creaPolilyne(Marker origen, Marker destino, int peso) {
-        //Se crea una polyline grafica
-        PolylineOptions POLILINEA = new PolylineOptions()
-                .add(origen.getPosition())
-                .add(destino.getPosition())
-                .width(4).color(R.color.Camino)
-                .geodesic(true);
-        //Se crea un arco logico y se le agrega la polyline
-        Arco nuevoAr =  new Arco(peso, POLILINEA, buscarVertice(destino.getTitle()));
-        InsertarArco(origen.getTitle(), nuevoAr);
-        //Se muestra graficamente en el Map
-        mMap.addPolyline(POLILINEA);
-        //Se cambia el estado Click agregar arco
-        click_add_polilyne = false;
-    }
+            public void InsertarVertice(Vertice nuevoV){
+                if (grafoCreado == null){
+                    grafoCreado = nuevoV;
+                    Toast.makeText(MapsActivityCreaGrafo.this, "Agregado (Raiz)", Toast.LENGTH_SHORT).show();
 
-    //####################################### METODOS GRAFO #################################################
 
-    public Vertice buscarVertice(String nombre){
-        if(grafoCreado == null){
-            return null;
-        }
-        Vertice aux = grafoCreado;
-
-        while(aux != null){
-            if(aux.nombre.equals(nombre)){
-                return aux;
-            }
-            aux = aux.sigVertice;
-        }
-        return null;
-    }
-
-    public void InsertarVertice(Vertice nuevoV){
-        if (grafoCreado == null){
-            grafoCreado = nuevoV;
-            Toast.makeText(MapsActivityCreaGrafo.this, "Agregado (Raiz)", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Vertice aux = grafoCreado;
-        while (aux != null){
-            if (aux.sigVertice == null){
-                aux.sigVertice = nuevoV;
-                Toast.makeText(MapsActivityCreaGrafo.this, "Agregado!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            aux = aux.sigVertice;
-        }
-    }
-
-    public void InsertarArco(String nombre, Arco nuevoA){
-        if (grafoCreado == null){
-            return;
-        }
-        Vertice auxV = grafoCreado;
-
-        while(auxV != null){
-            if(auxV.nombre.equals(nombre)){
-                if(auxV.sigA == null){
-                    auxV.sigA = nuevoA;
-                    Toast.makeText(MapsActivityCreaGrafo.this, "Arco primero", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                Arco auxA = auxV.sigA;
-
-                while (auxA != null){
-                    if(auxA.sigArco == null){
-                        auxA.sigArco = nuevoA;
+                Vertice aux = grafoCreado;
+                while (aux != null){
+                    if (aux.sigVertice == null){
+                        aux.sigVertice = nuevoV;
                         Toast.makeText(MapsActivityCreaGrafo.this, "Agregado!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    auxA = auxA.sigArco;
+                    aux = aux.sigVertice;
                 }
             }
-            auxV = auxV.sigVertice;
-        }
-    }
 
+            public void InsertarArco(String nombre, Arco nuevoA){
+                if (grafoCreado == null){
+                    return;
+                }
+                Vertice auxV = grafoCreado;
 
+                while(auxV != null){
+                    if(auxV.nombre.equals(nombre)){
+                        if(auxV.sigA == null){
+                            auxV.sigA = nuevoA;
+                            Toast.makeText(MapsActivityCreaGrafo.this, "Arco primero", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-//    public void LeerGrafo(){ //
-//        if(grafoCreado == null){
-//            return;
-//        }
-//
-//        Vertice aux = grafoCreado;
-//        while(aux != null){
-//            //Leer vertice aux.nombre:
-//            LeerTxt_I("150,Pri",aux.nombre+":");
-//
-//            Arco var = aux.sigA; //
-//            while(var != null){
-//                //Leer arco var.destino-var.peso
-//                var = var.sigArco;
-//            }
-//            aux = aux.sigVertice;
-//        }
-//    }
-//
-//
-//    private boolean existe(String[] archivos, String archbusca)
-//    {
-//                for (int f = 0; f < archivos.length; f++) {
-//                    if (archbusca.equals(archivos[f])) {
-//                        return true;
-//                    }
-//
-//                }
-//                return false;
-//    }
-//
-//    public void LeerTxt_I(String usuario,String texto) //lo que hace es leer un txt en memoria interna
-//    {
-//        final String[] archivos = fileList(); // esta es una libreria propia para entrar a todos los txt de Android
-//        try
-//        {
-//            if (existe(archivos,"UsuariosArchivos.txt"))
-//            {
-//                InputStreamReader archivo = new InputStreamReader(openFileInput("UsuariosArchivos.txt"));
-//                BufferedReader br=new BufferedReader(archivo);
-//                String linea = br.readLine();
-//                String todo = "";
-//
-//                while(linea != null)
-//                {
-//                    todo=todo + linea +"\n";
-//                    linea=br.readLine();
-//
-//                    if(usuario.equals(todo))
-//                    {
-//                        //
-//                        RandomAccessFile fichero = new RandomAccessFile("UsuariosArchivos", "rw");
-//                        fichero.seek(br.read());
-//                        fichero.writeBytes("");
-//                        fichero.seek(fichero.getFilePointer());
-//                        fichero.writeBytes(texto);
-//                        fichero.close();
-//
-//                        Toast.makeText(MapsActivityCreaGrafo.this,"entro",Toast.LENGTH_LONG).show();
-//                        todo = "";
-//                    }
-//                }
-//                br.close();
-//                archivo.close();
-//            }
-//
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//            //Toast.makeText(Registro.this,"Error de lectura de Archivo",Toast.LENGTH_LONG).show();
-//        }
-//    }
+                        Arco auxA = auxV.sigA;
 
-    //######################################### VENTANAS DE DIALOGO #####################################################################
+                        while (auxA != null){
+                            if(auxA.sigArco == null){
+                                auxA.sigArco = nuevoA;
+                                Toast.makeText(MapsActivityCreaGrafo.this, "Agregado!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            auxA = auxA.sigArco;
+                        }
+                    }
+                    auxV = auxV.sigVertice;
+                }
+            }
+
+            //######################################### VENTANAS DE DIALOGO #####################################################################
 
             public void CreaDialogoNuevoVertice(){
                 DialogNewVertice dialogNewVertice = new DialogNewVertice();

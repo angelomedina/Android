@@ -17,7 +17,7 @@
 
         <activity
             android:name=".Graficos.Login"
-            android:label="@string/title_activity_maps">
+            android:label="   Log In">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,19 +26,21 @@
         </activity>
         <activity
             android:name=".Mapas.MapsActivityCargaGrafo"
-            android:label="@string/title_activity_maps_carga_grafo" />
-        <activity android:name=".Mapas.MainActivity" />
-        <activity android:name=".Graficos.Registro" />
+            android:label="    Cargar Grafo" />
+        <activity android:name=".Mapas.MainActivity"
+            android:label="Mapa"/>
+        <activity android:name=".Graficos.Registro"
+            android:label="    Registro"/>
         <activity
             android:name=".Graficos.Menu_Usuario"
-            android:label="@string/title_activity_menu__usuario"
+            android:label="     Menu Usuarios"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Mapas.MapsActivityCreaGrafo"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="    Crea Grafo"></activity>
         <activity
             android:name=".Graficos.Menu_Administrador"
-            android:label="@string/title_activity_menu__administrador"
+            android:label="    Menu Administrador"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

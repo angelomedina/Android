@@ -1,8 +1,8 @@
 package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
 
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import estructuras.grafos.estructurasproyect.com.grafos.R;
+import estructuras.grafos.estructurasproyect.com.grafos.Singleton.SingletonGrafo;
 
 public class MapsActivityCargaGrafo extends FragmentActivity
         implements
@@ -27,7 +28,7 @@ public class MapsActivityCargaGrafo extends FragmentActivity
     //Gmaps
     private GoogleMap mMap;
     //Dialogs / Validaciones
-    public Vertice grafo = MapsActivityCreaGrafo.grafoCreado;
+    public Vertice grafo = SingletonGrafo.getInstance().metGrafo.arbolUsuarioActual.grafo;// MapsActivityCreaGrafo.grafoCreado;
     public ArrayList<String> lista_vertices = new ArrayList<>();
     public boolean vertices_existentes;
     //Metodos Grafo

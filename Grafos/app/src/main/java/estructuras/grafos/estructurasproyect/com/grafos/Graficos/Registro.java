@@ -63,7 +63,14 @@ public class Registro extends AppCompatActivity {
                         {
                             todo=todo + linea +"\n";
                             linea=br.readLine();
-                            Toast.makeText(Registro.this,todo,Toast.LENGTH_LONG).show();
+                            if(todo.equals(""+"\n"))
+                            {
+                                //no impprima espacios vacios
+                            }
+                            else
+                            {
+                                Toast.makeText(Registro.this, todo, Toast.LENGTH_LONG).show();
+                            }
                             todo="";
                         }
                         br.close();
@@ -91,6 +98,9 @@ public class Registro extends AppCompatActivity {
                 try
                 {
                     OutputStreamWriter archivo = new OutputStreamWriter((openFileOutput("UsuariosArchivos.txt", Registro.MODE_PRIVATE)));//MODE_APPEND es indeipensable para escribir en el archivo
+                    archivo.write(123+","+"Fifa"+"\n"); //borro todos menos el usuario por defecto
+                    //String insertado = SingletonArbol.getInstance().metArbol.insertarB(SingletonArbol.getInstance().metArbol.raiz,123,"Fifa"); // inserto el arbol
+
                     archivo.close();
                     Toast.makeText(Registro.this, "Se formateo el txt", Toast.LENGTH_LONG).show();
 

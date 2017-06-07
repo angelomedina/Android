@@ -1,6 +1,9 @@
 package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
 
-import java.util.ArrayList;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import estructuras.grafos.estructurasproyect.com.grafos.Arbol.Arbol;
 
 /**
  * Created by Usuario on 4/6/2017.
@@ -9,18 +12,14 @@ import java.util.ArrayList;
 public class MetodosGrafo {
 
 
-
-    //Grafo
-    public Vertice grafoCreado;
-    public ArrayList<String> lista_vertices_agregados = new ArrayList<>();
-    public boolean vertice_existente;
-
+    public Vertice grafo;
+    public Arbol arbolUsuarioActual;
 
     public Vertice buscarVertice(String nombre){
-        if(grafoCreado == null){
+        if(grafo == null){
             return null;
         }
-        Vertice aux = grafoCreado;
+        Vertice aux = grafo;
 
         while(aux != null){
             if(aux.nombre.equals(nombre)){
@@ -31,78 +30,57 @@ public class MetodosGrafo {
         return null;
     }
 
-    public void InsertarVertice(Vertice nuevoV){
-        if (grafoCreado == null){
-            grafoCreado = nuevoV;
-            //Toast.makeText(MapsActivityCreaGrafo.this, "Agregado (Raiz)", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Vertice aux = grafoCreado;
-        while (aux != null){
-            if (aux.sigVertice == null){
-                aux.sigVertice = nuevoV;
-                //.makeText(MapsActivityCreaGrafo.this, "Agregado!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            aux = aux.sigVertice;
+    public void InsertarVertice(String nombre, LatLng ubicacion)
+    {
+        Vertice nuevo=new Vertice(nombre,ubicacion);
+        if (grafo == null)
+            grafo =nuevo;
+        else
+        {
+            nuevo.sigVertice = grafo;
+            grafo =nuevo;
         }
     }
 
-    public void InsertarArco(String nombre, Arco nuevoA){
-        if (grafoCreado == null){
-            return;
+    public void insertA(Vertice origen, Vertice destino, PolylineOptions arcoGrafico, int peso)// metodo para insertar los arcos al final
+    {
+        if (grafo == null)
+        {
+            // no haga nada
         }
-        Vertice auxV = grafoCreado;
-
-        while(auxV != null){
-            if(auxV.nombre.equals(nombre)){
-                if(auxV.sigA == null){
-                    auxV.sigA = nuevoA;
-                    //Toast.makeText(MapsActivityCreaGrafo.this, "Arco primero", Toast.LENGTH_SHORT).show();
-                    return;
+        if (origen.nombre.equals(destino.nombre)) // el origrn y el destino no puden ser iguales
+        {
+            // no se permiten bucles
+        }
+        else
+        {
+            Arco temp = null;
+            Arco nuevo = new Arco(peso,arcoGrafico,destino); // este es la sublista
+            nuevo.destino = destino;
+            if (origen.sigA == null)
+            {
+                origen.sigA = nuevo;//apuntando de vertice al incio de la sublista
+            }
+            else
+            {
+                Arco anterior = null;
+                temp = origen.sigA;
+                while ((temp != null) && (temp.destino.nombre != destino.nombre)) //para que no apunte dos veces al mismo destino
+                {
+                    anterior=temp;
+                    temp = temp.sigArco;
                 }
-
-                Arco auxA = auxV.sigA;
-
-                while (auxA != null){
-                    if(auxA.sigArco == null){
-                        auxA.sigArco = nuevoA;
-                        //Toast.makeText(MapsActivityCreaGrafo.this, "Agregado!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    auxA = auxA.sigArco;
+                if (temp == null)
+                {
+                    anterior.sigArco = nuevo;
+                }
+                else
+                {
+                    // no se pueden repetir
                 }
             }
-            auxV = auxV.sigVertice;
         }
     }
 
-
-
-    //insertar vertce
-
-    // modificar
-
-     //eliminar
-
-    //insertar arco
-
-    // tipo de grafo
-
-    // camino ma corto
-
-    // conexo
-
-    // ciclico
-
-    // llegar de A a B
-
-    // vertices sumideros
-
-    // vertices fuentes
-
-    // grado externo
-
-    // grado interno
 
 }

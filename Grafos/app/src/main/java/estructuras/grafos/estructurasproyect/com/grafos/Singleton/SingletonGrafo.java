@@ -8,7 +8,7 @@ import estructuras.grafos.estructurasproyect.com.grafos.Mapas.MetodosGrafo;
 
 public class SingletonGrafo {
 
-    public MetodosGrafo metGrafo=new MetodosGrafo();//estoy instanciando la los metodos de grafo
+    public  MetodosGrafo metGrafo=new MetodosGrafo();//estoy instanciando la los metodos de grafo
 
     private static SingletonGrafo _instance;
 
