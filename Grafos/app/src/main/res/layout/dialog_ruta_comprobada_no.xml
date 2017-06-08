@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AlertDialog.AppCompat"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/blanco"
+    android:orientation="vertical"
+    android:theme="@style/AlertDialog.AppCompat"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp"
+        android:text="¿Existe Ruta?"
+        android:textAlignment="center"
+        android:textColor="@color/blanco"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:theme="@style/AlertDialog.AppCompat" />
+
+    <TextView
+        android:id="@+id/output_ruta_comprobada_txt"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:textAlignment="center"
+        android:text="No existe la ruta"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:theme="@style/AlertDialog.AppCompat" />
+
+    <Button
+        android:id="@+id/comprobar_aceptar_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_vertical|center"
+        android:layout_marginBottom="15dp"
+        android:background="@color/colorPrimaryDark"
+        android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Aceptar"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

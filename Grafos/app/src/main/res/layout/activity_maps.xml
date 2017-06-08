@@ -20,6 +20,16 @@
             >
 
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/dell_marker_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                map:fab_colorNormal="@color/colorPrimaryDark"
+                map:fab_icon="@drawable/dell_marker_icon"
+                map:fab_size="mini"
+                map:fab_title="Eliminar vertice"
+                />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/add_marker_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,7 +37,6 @@
                 map:fab_icon="@drawable/add_marker_icon"
                 map:fab_size="mini"
                 map:fab_title="Agregar vertice"
-
                 />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
@@ -38,7 +47,6 @@
                 map:fab_icon="@drawable/add_polilyne_icon"
                 map:fab_size="mini"
                 map:fab_title="Agregar arco"
-
                 />
 
             <com.getbase.floatingactionbutton.FloatingActionButton

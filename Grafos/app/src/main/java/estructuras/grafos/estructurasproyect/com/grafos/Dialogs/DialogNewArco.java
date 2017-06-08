@@ -1,4 +1,4 @@
-package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
+package estructuras.grafos.estructurasproyect.com.grafos.Dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

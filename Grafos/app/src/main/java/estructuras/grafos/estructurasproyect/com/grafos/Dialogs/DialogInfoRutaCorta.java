@@ -1,4 +1,4 @@
-package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
+package estructuras.grafos.estructurasproyect.com.grafos.Dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,7 +16,7 @@ import estructuras.grafos.estructurasproyect.com.grafos.R;
  * Created by Admi on 1/6/2017.
  */
 
-public class DialogInfoRuta extends DialogFragment
+public class DialogInfoRutaCorta extends DialogFragment
         implements
         Button.OnClickListener
         {
@@ -33,12 +33,12 @@ public class DialogInfoRuta extends DialogFragment
         void FinalizaDialogoNewArco(String origen, String destino, String tipo);
     }
 
-    public DialogInfoRuta() {
+    public DialogInfoRutaCorta() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_info_ruta, container);
+        View view = inflater.inflate(R.layout.dialog_info_ruta_corta, container);
 
         lista = (Spinner) view.findViewById(R.id.spinner_tipo);
         ArrayAdapter adaptadorLista = new ArrayAdapter<String>(this.getActivity(),android.R.layout.select_dialog_item, datos_lista);

@@ -1,4 +1,4 @@
-package estructuras.grafos.estructurasproyect.com.grafos.Mapas;
+package estructuras.grafos.estructurasproyect.com.grafos.Dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -14,7 +14,7 @@ import estructuras.grafos.estructurasproyect.com.grafos.R;
  * Created by Admi on 1/6/2017.
  */
 
-public class DialogNewVertice extends DialogFragment implements Button.OnClickListener {
+public class DialogDellVertice extends DialogFragment implements Button.OnClickListener {
 
     public EditText nombreVerticeTxt;
     public Button agregaVerticeBtn;
@@ -22,17 +22,17 @@ public class DialogNewVertice extends DialogFragment implements Button.OnClickLi
 
 
     public interface DialogListener{
-        void FinalizaDialogoNewVertice(String texto);
+        void FinalizaDialogoDellVertice(String texto);
     }
 
-    public DialogNewVertice() {
+    public DialogDellVertice() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_new_vertice, container);
-        nombreVerticeTxt = (EditText) view.findViewById(R.id.input_nombre_vertice_txt);
-        agregaVerticeBtn = (Button) view.findViewById(R.id.agrega_vertice_nuevo_btn);
+        View view = inflater.inflate(R.layout.dialog_dell_vertice, container);
+        nombreVerticeTxt = (EditText) view.findViewById(R.id.input_nombre_dell_vertice_txt);
+        agregaVerticeBtn = (Button) view.findViewById(R.id.dell_vertice_btn);
         agregaVerticeBtn.setOnClickListener(this);
 
         return view;
@@ -41,7 +41,7 @@ public class DialogNewVertice extends DialogFragment implements Button.OnClickLi
     @Override
     public void onClick(View v) {
         DialogListener activity = (DialogListener) getActivity();
-        activity.FinalizaDialogoNewVertice(nombreVerticeTxt.getText().toString());
+        activity.FinalizaDialogoDellVertice(nombreVerticeTxt.getText().toString());
         this.dismiss();
     }
 

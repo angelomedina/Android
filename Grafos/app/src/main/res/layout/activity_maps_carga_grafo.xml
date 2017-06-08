@@ -19,6 +19,15 @@
     map:fab_labelsPosition="left">
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ciclico_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        map:fab_colorNormal="@color/colorPrimaryDark"
+        map:fab_icon="@drawable/ciclico_icon"
+        map:fab_size="mini"
+        map:fab_title="Comprobar Grafo Ciclico" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/navigation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +35,15 @@
         map:fab_icon="@drawable/navegacion_icon"
         map:fab_size="mini"
         map:fab_title="Trazar Ruta Corta" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/comprobar_ruta_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        map:fab_colorNormal="@color/colorPrimaryDark"
+        map:fab_icon="@drawable/existe_ruta_icon"
+        map:fab_size="mini"
+        map:fab_title="Comprobar Ruta" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/cargar_mapa_button"
